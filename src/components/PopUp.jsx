@@ -39,7 +39,7 @@ const PopUp = ({ open, close }) => {
     setIsSubmitting(true);
 
     try {
-      const { data, error } = await supabase.from("applications").insert([
+      const { _, error } = await supabase.from("applications").insert([
         {
           company: company,
           url: url || "Not Given",
