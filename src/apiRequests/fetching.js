@@ -1,7 +1,10 @@
 import { supabase } from "../database/supabase.js";
 
 export const fetchApplications = async () => {
-  const { data, error } = await supabase.from("applications").select();
+  const { data, error } = await supabase
+    .from("applications")
+    .select()
+    .order("created_at", { ascending: false });
 
   if (error) throw error;
 

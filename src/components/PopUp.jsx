@@ -16,7 +16,6 @@ const PopUp = ({ open, close }) => {
   };
   const handleCompanyChange = (e) => {
     setCompany(e.target.value);
-    console.log(e.target.value);
   };
   const handleDateChange = (e) => {
     setAppliedOn(e.target.value);

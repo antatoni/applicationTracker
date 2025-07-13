@@ -1,14 +1,41 @@
 import { useEffect, useState } from "react";
 import { fetchApplications } from "../apiRequests/fetching.js";
 import { stages } from "../constants/stage.js";
+import { updateStage, updateCompany } from "../apiRequests/updaters.js";
 
 const Applications = () => {
   const [applications, setApplications] = useState([]);
   const [editing, setEditing] = useState(false);
-  const [stage, setStage] = useState(stages[0]);
-  const handleStageChange = (e, application) => {
-    setStage(e.target.value);
-    console.log(application);
+  const handleStageChange = async (e, application) => {
+    const newStage = e.target.value;
+
+    try {
+      await updateStage(newStage, application);
+
+      setApplications((prev) =>
+        prev.map((app) =>
+          app.id === application.id ? { ...app, stage: newStage } : app,
+        ),
+      );
+    } catch (error) {
+      console.error(`Failed to update stage: ${error.message}`);
+      alert(`Failed to update stage`);
+    }
+  };
+  const handleCompanyChange = async (e, application) => {
+    const newCompany = e.target.value;
+    console.log(newCompany);
+    try {
+      await updateCompany(newCompany, application);
+      setApplications((prev) =>
+        prev.map((app) =>
+          app.id === application.id ? { ...app, company: newCompany } : app,
+        ),
+      );
+    } catch (error) {
+      console.error(`Failed to update company ${error.message}`);
+      alert(`Failed to update company!`);
+    }
   };
   useEffect(() => {
     const loaderData = async () => {
@@ -30,12 +57,21 @@ const Applications = () => {
             key={application.id}
             className="align-center m-3 flex justify-around gap-15 rounded-2xl border-1 bg-[#48CAE4] p-5"
           >
-            <div className="content-center">{application.company}</div>
+            {editing ? (
+              <input
+                type="text"
+                value={application.company}
+                className="text-md mr-5 ml-5 overflow-auto rounded-2xl border-2 bg-gray-300 text-center font-semibold"
+                onChange={(e) => handleCompanyChange(e, application)}
+              />
+            ) : (
+              <div className="content-center">{application.company}</div>
+            )}
             <div className="content-center">{application.applied_on}</div>
             {editing ? (
               <select
                 name="stage"
-                value={stage}
+                value={application.stage}
                 onChange={(event) => handleStageChange(event, application)}
                 className="text-md mr-5 ml-5 border-2 bg-gray-300 text-center font-semibold"
               >
