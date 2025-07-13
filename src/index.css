@@ -1,5 +1,5 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 body {
-  background: rgb(183, 180, 180);
+  background: #caf0f8;
 }

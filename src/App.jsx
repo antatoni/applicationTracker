@@ -12,7 +12,7 @@ function App() {
       <div className="">
         <button
           onClick={openPopUp}
-          className="transition-all-2ms m-5 content-center rounded-lg border-1 bg-[#708a97] p-1 text-center text-2xl font-semibold duration-300 hover:bg-[#607d8b]"
+          className="transition-all-2ms m-5 content-center rounded-lg border-1 bg-[#0077B6] p-2 text-center text-2xl font-semibold duration-300 hover:bg-[#023E8A]"
         >
           Create
         </button>

@@ -6,8 +6,9 @@ const Applications = () => {
   const [applications, setApplications] = useState([]);
   const [editing, setEditing] = useState(false);
   const [stage, setStage] = useState(stages[0]);
-  const handleStageChange = (e) => {
+  const handleStageChange = (e, application) => {
     setStage(e.target.value);
+    console.log(application);
   };
   useEffect(() => {
     const loaderData = async () => {
@@ -23,11 +24,11 @@ const Applications = () => {
   }, []);
   return (
     <>
-      <div className="m-15 flex flex-col gap-5 rounded-2xl border-2 bg-[#A0B1B9] p-3">
+      <div className="m-15 flex flex-col gap-5 rounded-2xl border-2 bg-[#ADE8F4] p-3">
         {applications.map((application) => (
           <div
             key={application.id}
-            className="align-center m-3 flex justify-around gap-15 rounded-2xl border-1 bg-[#47c1d1] p-5"
+            className="align-center m-3 flex justify-around gap-15 rounded-2xl border-1 bg-[#48CAE4] p-5"
           >
             <div className="content-center">{application.company}</div>
             <div className="content-center">{application.applied_on}</div>
@@ -35,7 +36,7 @@ const Applications = () => {
               <select
                 name="stage"
                 value={stage}
-                onChange={(event) => handleStageChange(event)}
+                onChange={(event) => handleStageChange(event, application)}
                 className="text-md mr-5 ml-5 border-2 bg-gray-300 text-center font-semibold"
               >
                 {stages.map((stage, index) => (
@@ -53,7 +54,7 @@ const Applications = () => {
             )}
             <div className="content-center">{application.url}</div>
             <button
-              className="transition-all-2ms content-center rounded-lg border-1 bg-[#708a97] p-1 text-center text-xl font-medium duration-300 hover:bg-[#607d8b]"
+              className="transition-all-2ms content-center rounded-lg border-1 bg-[#0077B6] p-2 text-center text-xl font-medium duration-300 hover:bg-[#023E8A]"
               onClick={() => setEditing(!editing)}
             >
               Edit
