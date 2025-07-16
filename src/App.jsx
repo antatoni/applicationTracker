@@ -9,24 +9,26 @@ function App() {
 
   const openPopUp = () => setIsOpen(true);
   const closePopUp = () => setIsOpen(false);
+
   return (
     <>
       <div className="relative flex-col">
         <Header>
           <Link to={"/register"}>
-            <button className="transition-all-2ms m-5 content-center rounded-lg border-1 bg-[#0077B6] p-2 text-center text-2xl font-semibold duration-300 hover:bg-[#023E8A]">
+            <button className="transition-all-2ms content-center rounded-lg border-2 border-black bg-[#1146a8] p-2 text-center text-2xl font-semibold text-white duration-300 hover:bg-[#2c68ff]">
               Register
             </button>
           </Link>
+
           <Link to={"/login"}>
-            <button className="transition-all-2ms m-5 content-center rounded-lg border-1 bg-[#0077B6] p-2 text-center text-2xl font-semibold duration-300 hover:bg-[#023E8A]">
+            <button className="transition-all-2ms content-center rounded-lg border-2 border-black bg-[#1146a8] p-2 text-center text-2xl font-semibold text-white duration-300 hover:bg-[#2c68ff]">
               LogIn
             </button>
           </Link>
 
           <button
             onClick={openPopUp}
-            className="transition-all-2ms s m-5 content-center rounded-lg border-1 bg-[#0077B6] p-2 text-center text-2xl font-semibold duration-300 hover:bg-[#023E8A]"
+            className="transition-all-2ms content-center rounded-lg border-2 border-black bg-[#1146a8] p-2 text-center text-2xl font-semibold text-white duration-300 hover:bg-[#2c68ff]"
           >
             Create
           </button>

@@ -10,7 +10,6 @@ const Applications = () => {
       try {
         const data = await fetchApplications();
         setApplications(data);
-        console.log(data);
       } catch (error) {
         console.error(`Failed to load applications: ${error.message}`);
       }
