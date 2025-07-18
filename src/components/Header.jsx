@@ -10,7 +10,7 @@ const Header = ({ children }) => {
           </div>
         </Link>
 
-        <div className="m-5 flex justify-end gap-6">{children}</div>
+        <div className="m-5 mr-15 flex justify-end gap-6">{children}</div>
       </div>
     </>
   );
