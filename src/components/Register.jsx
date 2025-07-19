@@ -19,7 +19,7 @@ const Register = () => {
 
   const handleSubmit = async (email, pass) => {
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { _, error } = await supabase.auth.signUp({
         email: email,
         password: pass,
       });

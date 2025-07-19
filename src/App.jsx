@@ -26,6 +26,10 @@ function App() {
   const openPopUp = () => setIsOpen(true);
   const closePopUp = () => setIsOpen(false);
 
+  const handleLogOut = async () => {
+    supabase.auth.signOut();
+  };
+
   return (
     <>
       <div className="relative flex-col">
@@ -45,7 +49,14 @@ function App() {
               </Link>
             </div>
           ) : (
-            <div>loggedin</div>
+            <div>
+              <button
+                onClick={() => handleLogOut()}
+                className="transition-all-2ms content-center rounded-lg border-2 border-black bg-[#1146a8] p-2 text-center text-2xl font-semibold text-white duration-300 hover:bg-[#2c68ff]"
+              >
+                Logout
+              </button>
+            </div>
           )}
 
           <button
