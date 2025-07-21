@@ -2,12 +2,11 @@ import { useState } from "react";
 import { stages } from "../constants/stage.js";
 import { supabase } from "../database/supabase.js";
 
-const PopUp = ({ open, close }) => {
+const PopUp = ({ open, close, userInfo }) => {
   const [stage, setStage] = useState(stages[0]);
   const [company, setCompany] = useState("");
   const [url, setUrl] = useState("");
   const [appliedOn, setAppliedOn] = useState("");
-  const [objectData, setObjectData] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   if (!open) return null;
 
@@ -24,7 +23,7 @@ const PopUp = ({ open, close }) => {
     setUrl(e.target.value);
   };
   const handleSubmit = async () => {
-    console.log(`form data:`, { company, appliedOn, url, stage });
+    console.log(`form data:`, { company, appliedOn, url, stage, userInfo });
     if (!company) {
       alert(`Please provide company name!`);
       return;
@@ -38,35 +37,34 @@ const PopUp = ({ open, close }) => {
     setIsSubmitting(true);
 
     try {
-      const { _, error } = await supabase.from("applications").insert([
+      const { data, error } = await supabase.from("applications").insert([
         {
           company: company,
           url: url || "Not Given",
           applied_on: appliedOn,
           stage: stage,
+          user_uid: userInfo.id,
         },
       ]);
-      if (error) throw error;
+      if (error) {
+        console.error(`Database error: ${error.message}`);
+        throw error;
+      }
 
-      alert("Application saved successfulyl!");
+      console.log(`inserted data : ${data}`);
+
+      alert("Application saved successfullly!");
       setCompany("");
       setUrl("");
       setAppliedOn("");
       setStage(stages[0]);
       close();
+      window.location.reload();
     } catch (error) {
       alert(`Error saving application : ${error.message}`);
     } finally {
       setIsSubmitting(false);
     }
-
-    setObjectData({
-      company: company,
-      url: url ? url : `Not Given`,
-      appliedOn: appliedOn,
-      stage: stage,
-    });
-    console.log(objectData);
   };
 
   return (

@@ -23,6 +23,7 @@ const Login = () => {
         password: pass,
       });
       if (!error) router("/");
+      console.log(data);
     } catch (error) {
       console.error(`Problem with Logging in ! ${error.message}`);
     }

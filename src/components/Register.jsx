@@ -19,11 +19,32 @@ const Register = () => {
 
   const handleSubmit = async (email, pass) => {
     try {
-      const { _, error } = await supabase.auth.signUp({
-        email: email,
-        password: pass,
-      });
-      if (!error) router("/");
+      const { data: userData, error: signUpError } = await supabase.auth.signUp(
+        {
+          email: email,
+          password: pass,
+        },
+      );
+      if (signUpError) {
+        console.error(`Problem with signup! ${signUpError.message}`);
+        return;
+      }
+
+      if (userData.user) {
+        const { data: userRowData, error: userError } = await supabase
+          .from("users")
+          .insert([{ UID: userData.user.id, email: userData.user.email }]);
+
+        if (userError) {
+          console.error(
+            `Problem with inserting user into DB :${userError.message}`,
+          );
+          return;
+        }
+      }
+
+      alert(`Successful register!`);
+      router("/");
     } catch (error) {
       console.error(`Problem with signin up user ! : ${error.message}`);
     }

@@ -1,10 +1,11 @@
 import { supabase } from "../database/supabase.js";
 
-export const fetchApplications = async () => {
+export const fetchApplications = async (user) => {
   const { data, error } = await supabase
     .from("applications")
     .select()
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: false })
+    .eq("user_uid", user.id);
 
   if (error) throw error;
 

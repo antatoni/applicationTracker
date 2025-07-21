@@ -19,6 +19,7 @@ function App() {
     } = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session);
     });
+    console.log(session);
 
     return () => subscription.unsubscribe();
   }, []);
@@ -67,9 +68,19 @@ function App() {
           </button>
         </Header>
 
-        <Applications></Applications>
+        {session ? (
+          <Applications userInfo={session.user}></Applications>
+        ) : (
+          <div>Loading applications!</div>
+        )}
 
-        <PopUp open={isOpen} close={closePopUp}></PopUp>
+        {session && (
+          <PopUp
+            open={isOpen}
+            close={closePopUp}
+            userInfo={session.user}
+          ></PopUp>
+        )}
       </div>
     </>
   );
