@@ -26,11 +26,10 @@ const Register = () => {
       if (signUpError) {
         console.error(`Problem with signup! ${signUpError.message}`);
         return;
-      } else {
-        router("/dashboard");
       }
 
       alert(`Successful register!`);
+      router("/dashboard");
     } catch (error) {
       console.error(`Problem with signin up user ! : ${error.message}`);
     }
