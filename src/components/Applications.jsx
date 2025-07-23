@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { fetchApplications } from "../apiRequests/fetching.js";
 import Application from "./Application.jsx";
 
-const Applications = ({ userInfo }) => {
-  const [applications, setApplications] = useState([]);
-
+const Applications = ({ userInfo, applications, setApplications }) => {
   useEffect(() => {
     const loaderData = async () => {
       const cached = localStorage.getItem("cachedApps");
@@ -21,7 +19,8 @@ const Applications = ({ userInfo }) => {
       }
     };
     loaderData();
-  }, [userInfo]);
+  }, [userInfo, setApplications]);
+
   return (
     <>
       <div className="m-15 flex flex-col gap-5 rounded-2xl border-2 bg-[#ADE8F4] p-3">

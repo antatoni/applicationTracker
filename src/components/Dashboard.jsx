@@ -11,6 +11,7 @@ function Dashboard() {
   const { session } = useContext(SessionContext);
   const openPopUp = () => setIsOpen(true);
   const closePopUp = () => setIsOpen(false);
+  const [applications, setApplications] = useState([]);
 
   const router = useNavigate();
 
@@ -58,7 +59,11 @@ function Dashboard() {
         </Header>
 
         {session ? (
-          <Applications userInfo={session.user}></Applications>
+          <Applications
+            userInfo={session.user}
+            applications={applications}
+            setApplications={setApplications}
+          ></Applications>
         ) : (
           <div>Loading applications!</div>
         )}
@@ -68,6 +73,7 @@ function Dashboard() {
             open={isOpen}
             close={closePopUp}
             userInfo={session.user}
+            setApplications={setApplications}
           ></PopUp>
         )}
       </div>

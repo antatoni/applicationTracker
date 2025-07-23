@@ -2,7 +2,7 @@ import { useState } from "react";
 import { stages } from "../constants/stage.js";
 import { supabase } from "../database/supabase.js";
 
-const PopUp = ({ open, close, userInfo }) => {
+const PopUp = ({ open, close, userInfo, setApplications }) => {
   const [stage, setStage] = useState(stages[0]);
   const [company, setCompany] = useState("");
   const [url, setUrl] = useState("");
@@ -37,21 +37,30 @@ const PopUp = ({ open, close, userInfo }) => {
     setIsSubmitting(true);
 
     try {
-      const { data, error } = await supabase.from("applications").insert([
-        {
-          company: company,
-          url: url || "Not Given",
-          applied_on: appliedOn,
-          stage: stage,
-          user_uid: userInfo.id,
-        },
-      ]);
+      const { data, error } = await supabase
+        .from("applications")
+        .insert([
+          {
+            company: company,
+            url: url || "Not Given",
+            applied_on: appliedOn,
+            stage: stage,
+            user_uid: userInfo.id,
+          },
+        ])
+        .select();
       if (error) {
         console.error(`Database error: ${error.message}`);
         throw error;
       }
 
       console.log(`inserted data : ${data}`);
+
+      setApplications((prev) => {
+        const updated = [...data, ...prev];
+        localStorage.setItem("cachedApps", JSON.stringify(updated));
+        return updated;
+      });
 
       alert("Application saved successfullly!");
       setCompany("");
