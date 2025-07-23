@@ -68,7 +68,6 @@ const PopUp = ({ open, close, userInfo, setApplications }) => {
       setAppliedOn("");
       setStage(stages[0]);
       close();
-      window.location.reload();
     } catch (error) {
       alert(`Error saving application : ${error.message}`);
     } finally {
