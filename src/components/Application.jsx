@@ -1,5 +1,10 @@
 import { stages } from "../constants/stage.js";
-import { updateStage, updateCompany } from "../apiRequests/updaters.js";
+import {
+  updateStage,
+  updateCompany,
+  updateURL,
+  updateLocalStorageField,
+} from "../apiRequests/updaters.js";
 import { useState } from "react";
 
 const Application = ({ application }) => {
@@ -7,9 +12,11 @@ const Application = ({ application }) => {
   const [editing, setEditing] = useState(false);
   const handleStageChange = async (e) => {
     const newStage = e.target.value;
+    const field = "stage";
+    updateLocalStorageField(field, newStage, localApplication.id);
+
     try {
       await updateStage(newStage, localApplication);
-
       setLocalApplication((prev) => ({ ...prev, stage: newStage }));
     } catch (error) {
       console.error(`Failed to update stage: ${error.message}`);
@@ -18,18 +25,34 @@ const Application = ({ application }) => {
   };
   const handleCompanyChange = async (e) => {
     const newCompany = e.target.value;
+    const field = "company";
+    updateLocalStorageField(field, newCompany, localApplication.id);
     try {
       await updateCompany(newCompany, localApplication);
       setLocalApplication((prev) => ({ ...prev, company: newCompany }));
+      console.log(localApplication);
     } catch (error) {
       console.error(`Failed to update company ${error.message}`);
       alert(`Failed to update company!`);
+    }
+  };
+  const handleURLChange = async (e) => {
+    const newURL = e.target.value;
+    const field = "url";
+    updateLocalStorageField(field, newURL, localApplication.id);
+    try {
+      await updateURL(newURL, localApplication);
+      setLocalApplication((prev) => ({ ...prev, url: newURL }));
+    } catch (error) {
+      console.error(`failed to update URL ${error.message}`);
+      alert(`Failed to update company`);
     }
   };
   const checkURL = (url) => {
     if (url === "Not Given") return null;
     else return true;
   };
+
   return (
     <div className="align-center sm:gap-4rounded-2xl m-3 grid grid-cols-[1.2fr_0.8fr_1fr_2fr_auto] gap-8 border-1 bg-[#48CAE4] p-5 md:gap-6 lg:gap-8">
       {editing ? (
@@ -69,17 +92,24 @@ const Application = ({ application }) => {
           {localApplication.stage}
         </div>
       )}
-      {checkURL(localApplication.url) ? (
+      {editing ? (
+        <input
+          type="url"
+          value={localApplication.url}
+          className="text-md mr-5 ml-5 content-center overflow-auto rounded-2xl border-2 bg-gray-300 text-center font-semibold"
+          onChange={(event) => handleURLChange(event)}
+        />
+      ) : checkURL(localApplication.url) ? (
         <a
           href={localApplication.url}
           rel="noopener noreferrer"
           target="_blank"
-          className="inline-block max-w-full content-center overflow-hidden text-center underline hover:overflow-x-auto hover:text-blue-900"
+          className="inline-block max-w-full content-center overflow-hidden text-center font-bold italic underline hover:overflow-x-auto hover:text-blue-900"
         >
           {localApplication.url}
         </a>
       ) : (
-        <div className="content-center overflow-hidden text-center hover:overflow-x-auto">
+        <div className="content-center overflow-hidden text-center font-bold italic hover:overflow-x-auto">
           {localApplication.url}
         </div>
       )}

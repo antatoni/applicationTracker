@@ -9,6 +9,8 @@ import {
 } from "react-router";
 import Register from "./components/Register.jsx";
 import Login from "./components/Login.jsx";
+import Dashboard from "./components/Dashboard.jsx";
+import { SessionProvider } from "./contexts/SessionStorage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -20,15 +22,19 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   {
-    path: "login",
+    path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router}>
-      <App />
-    </RouterProvider>
+    <SessionProvider>
+      <RouterProvider router={router} />
+    </SessionProvider>
   </StrictMode>,
 );

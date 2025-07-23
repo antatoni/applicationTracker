@@ -28,10 +28,12 @@ const Register = () => {
       if (signUpError) {
         console.error(`Problem with signup! ${signUpError.message}`);
         return;
+      } else {
+        router("/dashboard");
       }
 
       if (userData.user) {
-        const { data: userRowData, error: userError } = await supabase
+        const { data: _, error: userError } = await supabase
           .from("users")
           .insert([{ UID: userData.user.id, email: userData.user.email }]);
 

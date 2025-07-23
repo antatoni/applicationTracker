@@ -7,9 +7,15 @@ const Applications = ({ userInfo }) => {
 
   useEffect(() => {
     const loaderData = async () => {
+      const cached = localStorage.getItem("cachedApps");
+      if (cached) {
+        setApplications(JSON.parse(cached));
+        return;
+      }
       try {
         const data = await fetchApplications(userInfo);
         setApplications(data);
+        localStorage.setItem("cachedApps", JSON.stringify(data));
       } catch (error) {
         console.error(`Failed to load applications: ${error.message}`);
       }

@@ -18,12 +18,13 @@ const Login = () => {
 
   const handleSubmit = async (email, pass) => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { _, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: pass,
       });
-      if (!error) router("/");
-      console.log(data);
+      if (!error) {
+        router("/dashboard");
+      }
     } catch (error) {
       console.error(`Problem with Logging in ! ${error.message}`);
     }
