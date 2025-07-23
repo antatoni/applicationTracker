@@ -19,12 +19,10 @@ const Register = () => {
 
   const handleSubmit = async (email, pass) => {
     try {
-      const { data: userData, error: signUpError } = await supabase.auth.signUp(
-        {
-          email: email,
-          password: pass,
-        },
-      );
+      const { data: _, error: signUpError } = await supabase.auth.signUp({
+        email: email,
+        password: pass,
+      });
       if (signUpError) {
         console.error(`Problem with signup! ${signUpError.message}`);
         return;
@@ -33,7 +31,6 @@ const Register = () => {
       }
 
       alert(`Successful register!`);
-      router("/");
     } catch (error) {
       console.error(`Problem with signin up user ! : ${error.message}`);
     }

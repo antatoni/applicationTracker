@@ -23,7 +23,6 @@ const PopUp = ({ open, close, userInfo, setApplications }) => {
     setUrl(e.target.value);
   };
   const handleSubmit = async () => {
-    console.log(`form data:`, { company, appliedOn, url, stage, userInfo });
     if (!company) {
       alert(`Please provide company name!`);
       return;
