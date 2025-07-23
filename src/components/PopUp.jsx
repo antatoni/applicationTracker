@@ -54,8 +54,6 @@ const PopUp = ({ open, close, userInfo, setApplications }) => {
         throw error;
       }
 
-      console.log(`inserted data : ${data}`);
-
       setApplications((prev) => {
         const updated = [...data, ...prev];
         localStorage.setItem("cachedApps", JSON.stringify(updated));

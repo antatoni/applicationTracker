@@ -32,19 +32,6 @@ const Register = () => {
         router("/dashboard");
       }
 
-      if (userData.user) {
-        const { data: _, error: userError } = await supabase
-          .from("users")
-          .insert([{ UID: userData.user.id, email: userData.user.email }]);
-
-        if (userError) {
-          console.error(
-            `Problem with inserting user into DB :${userError.message}`,
-          );
-          return;
-        }
-      }
-
       alert(`Successful register!`);
       router("/");
     } catch (error) {
