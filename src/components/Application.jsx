@@ -25,32 +25,41 @@ const Application = ({ application }) => {
   };
   const handleCompanyChange = async (e) => {
     const newCompany = e.target.value;
-    const field = "company";
-    updateLocalStorageField(field, newCompany, localApplication.id);
-    try {
-      await updateCompany(newCompany, localApplication);
-      setLocalApplication((prev) => ({ ...prev, company: newCompany }));
-      console.log(localApplication);
-    } catch (error) {
-      console.error(`Failed to update company ${error.message}`);
-      alert(`Failed to update company!`);
-    }
+    setLocalApplication((prev) => ({ ...prev, company: newCompany }));
   };
   const handleURLChange = async (e) => {
     const newURL = e.target.value;
-    const field = "url";
-    updateLocalStorageField(field, newURL, localApplication.id);
-    try {
-      await updateURL(newURL, localApplication);
-      setLocalApplication((prev) => ({ ...prev, url: newURL }));
-    } catch (error) {
-      console.error(`failed to update URL ${error.message}`);
-      alert(`Failed to update company`);
-    }
+    setLocalApplication((prev) => ({ ...prev, url: newURL }));
   };
   const checkURL = (url) => {
     if (url === "Not Given") return null;
     else return true;
+  };
+
+  const toggleEdit = async () => {
+    if (editing) {
+      try {
+        await Promise.all([
+          updateCompany(localApplication.company, localApplication),
+          updateURL(localApplication.url, localApplication),
+        ]);
+
+        updateLocalStorageField(
+          "company",
+          localApplication.company,
+          localApplication.id,
+        );
+        updateLocalStorageField(
+          "url",
+          localApplication.url,
+          localApplication.id,
+        );
+      } catch (error) {
+        console.error(`Problem with updating company/url ${error.message}`);
+        return;
+      }
+    }
+    setEditing(!editing);
   };
 
   return (
@@ -116,9 +125,9 @@ const Application = ({ application }) => {
 
       <button
         className="transition-all-2ms mr-3 ml-3 content-center rounded-lg border-1 bg-[#0077B6] p-2 text-center text-xl font-bold duration-300 hover:bg-[#023E8A]"
-        onClick={() => setEditing(!editing)}
+        onClick={toggleEdit}
       >
-        Edit
+        {editing ? "Save" : "Edit"}
       </button>
     </div>
   );
