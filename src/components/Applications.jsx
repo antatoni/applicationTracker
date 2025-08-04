@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { fetchApplications } from "../apiRequests/fetching.js";
 import Application from "./Application.jsx";
+import ApplicationBar from "./ApplicationBar.jsx";
 
 const Applications = ({ userInfo, applications, setApplications }) => {
   useEffect(() => {
@@ -24,6 +25,7 @@ const Applications = ({ userInfo, applications, setApplications }) => {
   return (
     <>
       <div className="m-15 flex flex-col gap-5 rounded-2xl border-2 bg-[#ADE8F4] p-3">
+        <ApplicationBar></ApplicationBar>
         {applications.map((application) => (
           <Application
             key={application.id}
