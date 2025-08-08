@@ -68,7 +68,7 @@ const Application = ({ application, updateApplication }) => {
   };
 
   return (
-    <div className="align-center m-3 grid grid-cols-[1.2fr_0.8fr_1fr_2fr_auto] gap-8 rounded-2xl border-1 bg-[#48CAE4] p-5 sm:gap-4 md:gap-6 lg:gap-8">
+    <div className="align-center m-3 grid grid-cols-[1.2fr_0.8fr_1fr_1.5fr_0.5fr] gap-8 rounded-2xl border-1 bg-[#48CAE4] p-5 sm:gap-4 md:gap-6 lg:gap-8">
       {editing ? (
         <input
           type="text"
