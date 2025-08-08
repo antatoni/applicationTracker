@@ -7,7 +7,7 @@ import {
 } from "../apiRequests/updaters.js";
 import { useState } from "react";
 
-const Application = ({ application }) => {
+const Application = ({ application, updateApplication }) => {
   const [localApplication, setLocalApplication] = useState(application);
   const [editing, setEditing] = useState(false);
   const handleStageChange = async (e) => {
@@ -18,6 +18,7 @@ const Application = ({ application }) => {
     try {
       await updateStage(newStage, localApplication);
       setLocalApplication((prev) => ({ ...prev, stage: newStage }));
+      updateApplication(localApplication);
     } catch (error) {
       console.error(`Failed to update stage: ${error.message}`);
       alert(`Failed to update stage`);
@@ -26,10 +27,12 @@ const Application = ({ application }) => {
   const handleCompanyChange = async (e) => {
     const newCompany = e.target.value;
     setLocalApplication((prev) => ({ ...prev, company: newCompany }));
+    updateApplication(localApplication);
   };
   const handleURLChange = async (e) => {
     const newURL = e.target.value;
     setLocalApplication((prev) => ({ ...prev, url: newURL }));
+    updateApplication(localApplication);
   };
   const checkURL = (url) => {
     if (url === "Not Given") return null;
@@ -54,6 +57,8 @@ const Application = ({ application }) => {
           localApplication.url,
           localApplication.id,
         );
+
+        updateApplication(localApplication);
       } catch (error) {
         console.error(`Problem with updating company/url ${error.message}`);
         return;

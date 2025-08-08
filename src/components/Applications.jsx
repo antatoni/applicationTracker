@@ -3,7 +3,12 @@ import { fetchApplications } from "../apiRequests/fetching.js";
 import Application from "./Application.jsx";
 import ApplicationBar from "./ApplicationBar.jsx";
 
-const Applications = ({ userInfo, applications, setApplications }) => {
+const Applications = ({
+  userInfo,
+  applications,
+  setApplications,
+  updateApplication,
+}) => {
   const [sortBy, setSortBy] = useState("");
   const [filterBy, setFilterBy] = useState("");
 
@@ -64,6 +69,7 @@ const Applications = ({ userInfo, applications, setApplications }) => {
           <Application
             key={application.id}
             application={application}
+            updateApplication={updateApplication}
           ></Application>
         ))}
       </div>

@@ -21,6 +21,16 @@ function Dashboard() {
     router("/");
   };
 
+  const updateApplication = (updatedApplication) => {
+    setApplications((prevApps) => {
+      const updated = prevApps.map((app) =>
+        app.id === updatedApplication.id ? updatedApplication : app,
+      );
+      localStorage.setItem("cachedApps", JSON.stringify(updated));
+      return updated;
+    });
+  };
+
   return (
     <>
       <div className="relative flex-col">
@@ -63,6 +73,7 @@ function Dashboard() {
             userInfo={session.user}
             applications={applications}
             setApplications={setApplications}
+            updateApplication={updateApplication}
           ></Applications>
         ) : (
           <div>Loading applications!</div>
