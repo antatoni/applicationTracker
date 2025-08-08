@@ -1,15 +1,17 @@
 import { useState } from "react";
 
-const ApplicationBar = () => {
+const ApplicationBar = ({ onSort, onFilter }) => {
   const [sortOption, setSortOption] = useState("");
   const [stageOption, setStageOption] = useState("");
   const handleSortChange = (event) => {
     const newSort = event.target.value;
     setSortOption(newSort);
+    onSort(newSort);
   };
   const handleFilterChange = (event) => {
     const newFilter = event.target.value;
     setStageOption(newFilter);
+    onFilter(newFilter);
   };
   return (
     <>
@@ -40,8 +42,10 @@ const ApplicationBar = () => {
               Sort by
             </option>
 
-            <option value="Newest first">Newest first</option>
-            <option value="Oldest first">Oldest first</option>
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="a-b">Company A-Z</option>
+            <option value="b-a">Company Z-A</option>
           </select>
           <select
             name="Filter by"
