@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PopUp from "./PopUp";
 import Applications from "./Applications";
 import Header from "./Header";
@@ -14,6 +14,12 @@ function Dashboard() {
   const [applications, setApplications] = useState([]);
 
   const router = useNavigate();
+
+  useEffect(() => {
+    if (!session) {
+      router("/login");
+    }
+  }, [session, router]);
 
   const handleLogOut = async () => {
     localStorage.removeItem("cachedApps");
