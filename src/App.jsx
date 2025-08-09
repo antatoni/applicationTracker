@@ -56,11 +56,13 @@ function App() {
         <div className="flex justify-center">
           <img
             src="landing-lg-white.png"
+            loading="lazy"
             alt="Showing many emails"
             className="hidden max-h-1/3 max-w-4/5 rounded-2xl lg:flex"
           />
           <img
             src="landing-small-white.jpg"
+            loading="lazy"
             alt="Showing many emails"
             className="flex max-h-1/3 max-w-3/5 rounded-2xl lg:hidden"
           />
