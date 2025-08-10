@@ -50,9 +50,13 @@ function App() {
         )}
       </Header>
       <div className="flex flex-col">
-        <span className="p-4 text-center text-5xl font-bold italic text-shadow-gray-800 text-shadow-md">
-          Tired of going through emails ?
-        </span>
+        <h1 className="mb-6 text-center text-4xl leading-tight font-bold text-black md:text-5xl lg:text-6xl">
+          Transform Your
+          <span className="block text-yellow-400">Job Hunt</span>
+        </h1>
+        <p className="mx-auto max-w-2xl p-3 text-center text-xl text-gray-500">
+          From email chaos to organized success
+        </p>
         <div className="flex justify-center">
           <img
             src="landing-lg-white.png"
@@ -67,12 +71,15 @@ function App() {
             className="flex max-h-1/3 max-w-3/5 rounded-2xl lg:hidden"
           />
         </div>
-        <span className="p-4 text-center text-2xl font-bold italic text-shadow-gray-700 text-shadow-md">
-          Be able to configure on what stage you are , the URL and much more !
-        </span>
-        <span className="p-4 text-center text-2xl font-bold italic text-shadow-gray-700 text-shadow-md">
-          If that is the case Register/Login and go to the dashboard !
-        </span>
+        <p className="text-center text-lg font-medium text-white">
+          ✨ Track application stages
+        </p>
+        <p className="text-center text-lg font-medium text-white">
+          🔗 Save job posting URLs
+        </p>
+        <p className="text-center text-lg font-medium text-white">
+          📊 Filter and organize everything
+        </p>
         <div className="flex justify-center p-4">
           {!session ? (
             <div className="flex gap-6">
