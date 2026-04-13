@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { stages } from "../constants/stage.js";
-import { supabase } from "../database/supabase.js";
 
 const PopUp = ({ open, close, userInfo, setApplications }) => {
   const [stage, setStage] = useState(stages[0]);
@@ -36,28 +35,11 @@ const PopUp = ({ open, close, userInfo, setApplications }) => {
     setIsSubmitting(true);
 
     try {
-      const { data, error } = await supabase
-        .from("applications")
-        .insert([
-          {
-            company: company,
-            url: url || "Not Given",
-            applied_on: appliedOn,
-            stage: stage,
-            user_uid: userInfo.id,
-          },
-        ])
-        .select();
-      if (error) {
-        console.error(`Database error: ${error.message}`);
-        throw error;
-      }
-
-      setApplications((prev) => {
-        const updated = [...data, ...prev];
-        localStorage.setItem("cachedApps", JSON.stringify(updated));
-        return updated;
-      });
+      // setApplications((prev) => {
+      //   const updated = [...data, ...prev];
+      //   localStorage.setItem("cachedApps", JSON.stringify(updated));
+      //   return updated;
+      // });
 
       alert("Application saved successfullly!");
       setCompany("");

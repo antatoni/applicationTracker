@@ -1,12 +1,11 @@
-import { supabase } from "../database/supabase";
 import Header from "./Header";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 import { useState } from "react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useNavigate();
+  // const router = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -16,19 +15,7 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = async (email, pass) => {
-    try {
-      const { _, error } = await supabase.auth.signInWithPassword({
-        email: email,
-        password: pass,
-      });
-      if (!error) {
-        router("/dashboard");
-      }
-    } catch (error) {
-      console.error(`Problem with Logging in ! ${error.message}`);
-    }
-  };
+  const handleSubmit = async () => {};
 
   return (
     <>

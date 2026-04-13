@@ -3,7 +3,6 @@ import PopUp from "./PopUp";
 import Applications from "./Applications";
 import Header from "./Header";
 import { Link, useNavigate } from "react-router";
-import { supabase } from "../database/supabase";
 import { SessionContext } from "../contexts/SessionStorage";
 
 function Dashboard() {
@@ -23,7 +22,6 @@ function Dashboard() {
 
   const handleLogOut = async () => {
     localStorage.removeItem("cachedApps");
-    supabase.auth.signOut();
     router("/");
   };
 

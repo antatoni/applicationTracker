@@ -1,10 +1,5 @@
 import { stages } from "../constants/stage.js";
-import {
-  updateStage,
-  updateCompany,
-  updateURL,
-  updateLocalStorageField,
-} from "../apiRequests/updaters.js";
+
 import { useState } from "react";
 
 const Application = ({ application, updateApplication }) => {
@@ -13,10 +8,9 @@ const Application = ({ application, updateApplication }) => {
   const handleStageChange = async (e) => {
     const newStage = e.target.value;
     const field = "stage";
-    updateLocalStorageField(field, newStage, localApplication.id);
 
     try {
-      await updateStage(newStage, localApplication);
+      // await updateStage(newStage, localApplication);
       setLocalApplication((prev) => ({ ...prev, stage: newStage }));
       updateApplication(localApplication);
     } catch (error) {

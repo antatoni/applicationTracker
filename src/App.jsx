@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import Header from "./components/Header";
 import { Link, useNavigate } from "react-router";
-import { supabase } from "./database/supabase";
 import Dashboard from "./components/Dashboard";
 import { SessionContext } from "./contexts/SessionStorage";
 
@@ -12,7 +11,6 @@ function App() {
 
   const handleLogOut = async () => {
     localStorage.removeItem("cachedApps");
-    supabase.auth.signOut();
   };
 
   return (

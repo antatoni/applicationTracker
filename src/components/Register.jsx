@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Header from "./Header";
-import { supabase } from "../database/supabase";
 import { useNavigate } from "react-router";
 
 const Register = () => {
@@ -17,17 +16,8 @@ const Register = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = async (email, pass) => {
+  const handleSubmit = async () => {
     try {
-      const { data: _, error: signUpError } = await supabase.auth.signUp({
-        email: email,
-        password: pass,
-      });
-      if (signUpError) {
-        console.error(`Problem with signup! ${signUpError.message}`);
-        return;
-      }
-
       alert(`Successful register!`);
       router("/dashboard");
     } catch (error) {

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { fetchApplications } from "../apiRequests/fetching.js";
 import Application from "./Application.jsx";
 import ApplicationBar from "./ApplicationBar.jsx";
 
@@ -18,13 +17,6 @@ const Applications = ({
       if (cached) {
         setApplications(JSON.parse(cached));
         return;
-      }
-      try {
-        const data = await fetchApplications(userInfo);
-        setApplications(data);
-        localStorage.setItem("cachedApps", JSON.stringify(data));
-      } catch (error) {
-        console.error(`Failed to load applications: ${error.message}`);
       }
     };
     loaderData();
