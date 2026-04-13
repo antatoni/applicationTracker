@@ -1,4 +1,4 @@
-const API_URL = `${import.meta.env.VITE_JWT_ISSUER}`;
+const API_URL = `${import.meta.env.VITE_BASE_URL}`;
 
 const getAuthHeader = () => ({
   "Content-Type": "application/json",

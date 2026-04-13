@@ -1,4 +1,4 @@
-const API_Url = `${import.meta.env.VITE_JWT_ISSUER}`;
+const API_Url = `${import.meta.env.VITE_BASE_URL}`;
 
 export const authService = {
   async register(email, password) {
