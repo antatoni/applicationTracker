@@ -1,96 +1,76 @@
 import { stages } from "../constants/stage.js";
-
 import { useState } from "react";
+import { applicationsService } from "../services/applicationsService.js";
 
-const Application = ({ application, updateApplication }) => {
+const Application = ({ application, handleDelete, handleUpdate }) => {
   const [localApplication, setLocalApplication] = useState(application);
   const [editing, setEditing] = useState(false);
-  const handleStageChange = async (e) => {
-    const newStage = e.target.value;
-    const field = "stage";
+  const [isSaving, setIsSaving] = useState(false);
 
-    try {
-      // await updateStage(newStage, localApplication);
-      setLocalApplication((prev) => ({ ...prev, stage: newStage }));
-      updateApplication(localApplication);
-    } catch (error) {
-      console.error(`Failed to update stage: ${error.message}`);
-      alert(`Failed to update stage`);
-    }
+  const handleStageChange = async (e) => {
+    setLocalApplication((prev) => ({ ...prev, stage: e.target.value }));
   };
   const handleCompanyChange = async (e) => {
-    const newCompany = e.target.value;
-    setLocalApplication((prev) => ({ ...prev, company: newCompany }));
-    updateApplication(localApplication);
+    setLocalApplication((prev) => ({ ...prev, company: e.target.value }));
   };
   const handleURLChange = async (e) => {
-    const newURL = e.target.value;
-    setLocalApplication((prev) => ({ ...prev, url: newURL }));
-    updateApplication(localApplication);
+    setLocalApplication((prev) => ({ ...prev, url: e.target.value }));
   };
-  const checkURL = (url) => {
-    if (url === "Not Given") return null;
-    else return true;
-  };
+  const checkURL = (url) => url !== "Not given";
 
   const toggleEdit = async () => {
     if (editing) {
+      setIsSaving(true);
       try {
-        await Promise.all([
-          updateCompany(localApplication.company, localApplication),
-          updateURL(localApplication.url, localApplication),
-        ]);
-
-        updateLocalStorageField(
-          "company",
-          localApplication.company,
-          localApplication.id,
-        );
-        updateLocalStorageField(
-          "url",
-          localApplication.url,
-          localApplication.id,
-        );
-
-        updateApplication(localApplication);
+        await handleUpdate(localApplication);
+        setEditing(false);
       } catch (error) {
-        console.error(`Problem with updating company/url ${error.message}`);
-        return;
+        alert(`Error saving :${error.message}`);
+      } finally {
+        setIsSaving(false);
       }
+    } else {
+      setEditing(true);
     }
-    setEditing(!editing);
+  };
+
+  const onDelete = () => {
+    if (window.confirm("Are you sure you want to delete this application?")) {
+      handleDelete(localApplication.id);
+    }
   };
 
   return (
-    <div className="align-center m-3 grid grid-cols-[1.2fr_0.8fr_1fr_1.5fr_0.5fr] gap-8 rounded-2xl border-1 bg-[#48CAE4] p-5 sm:gap-4 md:gap-6 lg:gap-8">
+    <div className="align-center m-3 grid grid-cols-[1.2fr_0.8fr_1fr_1.5fr_1fr] gap-8 rounded-2xl border-1 bg-[#48CAE4] p-5 sm:gap-4 md:gap-6 lg:gap-8">
+      {/* Company Column */}
       {editing ? (
         <input
           type="text"
           value={localApplication.company}
           className="text-md mr-5 ml-5 content-center overflow-auto rounded-2xl border-2 bg-gray-300 text-center font-semibold"
-          onChange={(event) => handleCompanyChange(event)}
+          onChange={handleCompanyChange}
         />
       ) : (
         <div className="content-center text-center font-bold italic">
           {localApplication.company}
         </div>
       )}
+
+      {/* Applied On Column */}
       <div className="content-center text-center font-bold italic">
-        {localApplication.applied_on}
+        {localApplication.appliedOn}
       </div>
+
+      {/* Stage Column */}
       {editing ? (
         <select
           name="stage"
           value={localApplication.stage}
-          onChange={(event) => handleStageChange(event)}
+          onChange={handleStageChange}
           className="text-md mr-5 ml-5 border-2 bg-gray-300 text-center font-semibold"
         >
           {stages.map((stage, index) => (
-            <option
-              key={index}
-              value={stage}
-              className="text-md mr-5 ml-5 overflow-auto rounded-2xl border-2 bg-gray-300 text-center font-semibold"
-            >
+            <option key={index} value={stage}>
               {stage}
             </option>
           ))}
@@ -100,12 +80,14 @@ const Application = ({ application, updateApplication }) => {
           {localApplication.stage}
         </div>
       )}
+
+      {/* URL Column */}
       {editing ? (
         <input
           type="url"
           value={localApplication.url}
           className="text-md mr-5 ml-5 content-center overflow-auto rounded-2xl border-2 bg-gray-300 text-center font-semibold"
-          onChange={(event) => handleURLChange(event)}
+          onChange={handleURLChange}
         />
       ) : checkURL(localApplication.url) ? (
         <a
@@ -122,12 +104,24 @@ const Application = ({ application, updateApplication }) => {
         </div>
       )}
 
-      <button
-        className="transition-all-2ms mr-3 ml-3 content-center rounded-lg border-1 bg-[#0077B6] p-2 text-center text-xl font-bold duration-300 hover:bg-[#023E8A]"
-        onClick={toggleEdit}
-      >
-        {editing ? "Save" : "Edit"}
-      </button>
+      {/* Buttons Column */}
+      <div className="flex items-center justify-center gap-2">
+        <button
+          disabled={isSaving}
+          className="transition-all-2ms content-center rounded-lg border-1 bg-[#0077B6] px-3 py-2 text-center text-lg font-bold whitespace-nowrap duration-300 hover:bg-[#023E8A] disabled:opacity-50"
+          onClick={toggleEdit}
+        >
+          {editing ? (isSaving ? "Saving..." : "Save") : "Edit"}
+        </button>
+        {!editing && (
+          <button
+            className="transition-all-2ms content-center rounded-lg border-1 bg-red-600 px-3 py-2 text-center text-lg font-bold whitespace-nowrap duration-300 hover:bg-red-800"
+            onClick={onDelete}
+          >
+            Delete
+          </button>
+        )}
+      </div>
     </div>
   );
 };

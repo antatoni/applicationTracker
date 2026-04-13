@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ApplicationTracker.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5b195952ab80993949086e3cfeab75b1f9d22c6b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+da8e08c3d6d1323581aa7218694ac8c084d5fcf9")]
 [assembly: System.Reflection.AssemblyProductAttribute("ApplicationTracker.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ApplicationTracker.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

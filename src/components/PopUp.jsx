@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { stages } from "../constants/stage.js";
+import { applicationsService } from "../services/applicationsService.js";
 
-const PopUp = ({ open, close, userInfo, setApplications }) => {
+const PopUp = ({ open, close, userInfo, applications, setApplications }) => {
   const [stage, setStage] = useState(stages[0]);
   const [company, setCompany] = useState("");
   const [url, setUrl] = useState("");
   const [appliedOn, setAppliedOn] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const userId = userInfo?.id || userInfo?.userId;
   if (!open) return null;
 
   const handleStageChange = (e) => {
@@ -35,11 +37,19 @@ const PopUp = ({ open, close, userInfo, setApplications }) => {
     setIsSubmitting(true);
 
     try {
-      // setApplications((prev) => {
-      //   const updated = [...data, ...prev];
-      //   localStorage.setItem("cachedApps", JSON.stringify(updated));
-      //   return updated;
-      // });
+      const newApplication = await applicationsService.createApplication({
+        company,
+        url: url || "Not given",
+        appliedOn,
+        stage,
+        userUid: userId,
+      });
+
+      setApplications((prev) => [newApplication, ...prev]);
+      localStorage.setItem(
+        "cachedApps",
+        JSON.stringify([newApplication, ...applications]),
+      );
 
       alert("Application saved successfullly!");
       setCompany("");

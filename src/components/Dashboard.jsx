@@ -5,6 +5,7 @@ import Header from "./Header";
 import { Link, useNavigate } from "react-router";
 import { SessionContext } from "../contexts/SessionStorage";
 import { authService } from "../services/authService";
+import { applicationsService } from "../services/applicationsService";
 
 function Dashboard() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,10 +17,19 @@ function Dashboard() {
   const router = useNavigate();
 
   useEffect(() => {
-    if (!session) {
-      router("/login");
-    }
-  }, []);
+    const loadApplications = async () => {
+      try {
+        const data = await applicationsService.getApplications(session.userId);
+        setApplications(data);
+        localStorage.setItem("cachedApps", JSON.stringify(data));
+      } catch (error) {
+        const cached = localStorage.getItem("cachedApps");
+        if (cached) setApplications(JSON.parse(cached));
+      }
+    };
+
+    if (session) loadApplications();
+  }, [session]);
 
   const handleLogOut = async () => {
     authService.logout();
@@ -76,7 +86,7 @@ function Dashboard() {
 
         {session ? (
           <Applications
-            userInfo={session.user}
+            userInfo={session}
             applications={applications}
             setApplications={setApplications}
             updateApplication={updateApplication}
@@ -89,7 +99,8 @@ function Dashboard() {
           <PopUp
             open={isOpen}
             close={closePopUp}
-            userInfo={session.user}
+            userInfo={session}
+            applications={applications}
             setApplications={setApplications}
           ></PopUp>
         )}

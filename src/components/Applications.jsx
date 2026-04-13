@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import Application from "./Application.jsx";
 import ApplicationBar from "./ApplicationBar.jsx";
+import { applicationsService } from "../services/applicationsService.js";
 
-const Applications = ({
-  userInfo,
-  applications,
-  setApplications,
-  updateApplication,
-}) => {
+const Applications = ({ userInfo, applications, setApplications }) => {
   const [sortBy, setSortBy] = useState("");
   const [filterBy, setFilterBy] = useState("");
+  const userId = userInfo?.id || userInfo?.userId;
 
   useEffect(() => {
     const loaderData = async () => {
@@ -50,6 +47,43 @@ const Applications = ({
       }
     });
 
+  const handleUpdate = async (updatedApp) => {
+    try {
+      const updated = await applicationsService.updateApplication(
+        updatedApp.id,
+        {
+          company: updatedApp.company,
+          stage: updatedApp.stage,
+          url: updatedApp.url,
+          userId: userId,
+        },
+      );
+
+      setApplications((prev) =>
+        prev.map((app) => (app.id === updated.id ? updated : app)),
+      );
+      const cached = JSON.parse(localStorage.getItem("cachedApps") || "[]");
+      const updatedCache = cached.map((app) =>
+        app.id === updated.id ? updated : app,
+      );
+      localStorage.setItem("cachedApps", JSON.stringify(updatedCache));
+    } catch (error) {
+      alert(`Error updating : ${error.message}`);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await applicationsService.deleteApplication(id, userId);
+      setApplications((prev) => prev.filter((app) => app.id !== id));
+      const cached = JSON.parse(localStorage.getItem("cachedApps") || "[]");
+      const updatedCache = cached.filter((app) => app.id !== id);
+      localStorage.setItem("cachedApps", JSON.stringify(updatedCache));
+    } catch (error) {
+      alert(`Error deleting :${error.message}`);
+    }
+  };
+
   return (
     <>
       <div className="m-15 flex flex-col gap-5 rounded-2xl border-2 bg-[#ADE8F4] p-3">
@@ -61,7 +95,8 @@ const Applications = ({
           <Application
             key={application.id}
             application={application}
-            updateApplication={updateApplication}
+            handleUpdate={handleUpdate}
+            handleDelete={handleDelete}
           ></Application>
         ))}
       </div>
