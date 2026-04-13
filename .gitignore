@@ -25,3 +25,10 @@ dist-ssr
 *.sw?
 bin/
 obj/
+# Sensitive files
+appsettings.Development.json
+appsettings.json
+appsettings.*.json
+docker-compose.yml
+.env
+.env.local
