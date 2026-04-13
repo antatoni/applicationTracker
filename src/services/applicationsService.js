@@ -1,4 +1,4 @@
-const API_URL = `${import.meta.env.VITE_BASE_URL}`;
+const API_URL = import.meta.env.VITE_BASE_URL;
 
 const getAuthHeader = () => ({
   "Content-Type": "application/json",
@@ -7,7 +7,7 @@ const getAuthHeader = () => ({
 
 export const applicationsService = {
   async getApplications(userId) {
-    const response = await fetch(`${API_URL}?userId=${userId}`, {
+    const response = await fetch(`${API_URL}/applications?userId=${userId}`, {
       headers: getAuthHeader(),
     });
     if (!response.ok) throw new Error("Failed to fetch applications!");
@@ -15,7 +15,7 @@ export const applicationsService = {
   },
 
   async createApplication(app) {
-    const response = await fetch(API_URL, {
+    const response = await fetch(`${API_URL}/applications`, {
       method: "POST",
       headers: getAuthHeader(),
       body: JSON.stringify(app),
@@ -25,7 +25,7 @@ export const applicationsService = {
   },
 
   async updateApplication(id, update) {
-    const response = await fetch(`${API_URL}/${id}`, {
+    const response = await fetch(`${API_URL}/applications/${id}`, {
       method: "PUT",
       headers: getAuthHeader(),
       body: JSON.stringify(update),
@@ -35,10 +35,13 @@ export const applicationsService = {
   },
 
   async deleteApplication(id, userId) {
-    const response = await fetch(`${API_URL}/${id}?userId=${userId}`, {
-      method: "DELETE",
-      headers: getAuthHeader(),
-    });
+    const response = await fetch(
+      `${API_URL}/applications/${id}?userId=${userId}`,
+      {
+        method: "DELETE",
+        headers: getAuthHeader(),
+      },
+    );
     if (!response.ok) throw new Error("Failed to delete application!");
     return response.status === 204 ? null : response.json();
   },
