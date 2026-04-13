@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\applicationTracker\\backend\\ApplicationTracker.Api\\ApplicationTracker.Api.csproj": {}
+    "D:\\applicationTracker\\backend\\applicationTracker.Api\\ApplicationTracker.Api.csproj": {}
   },
   "projects": {
-    "D:\\applicationTracker\\backend\\ApplicationTracker.Api\\ApplicationTracker.Api.csproj": {
+    "D:\\applicationTracker\\backend\\applicationTracker.Api\\ApplicationTracker.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\applicationTracker\\backend\\ApplicationTracker.Api\\ApplicationTracker.Api.csproj",
+        "projectUniqueName": "D:\\applicationTracker\\backend\\applicationTracker.Api\\ApplicationTracker.Api.csproj",
         "projectName": "ApplicationTracker.Api",
-        "projectPath": "D:\\applicationTracker\\backend\\ApplicationTracker.Api\\ApplicationTracker.Api.csproj",
+        "projectPath": "D:\\applicationTracker\\backend\\applicationTracker.Api\\ApplicationTracker.Api.csproj",
         "packagesPath": "C:\\Users\\Antani Kalchev\\.nuget\\packages\\",
-        "outputPath": "D:\\applicationTracker\\backend\\ApplicationTracker.Api\\obj\\",
+        "outputPath": "D:\\applicationTracker\\backend\\applicationTracker.Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Antani Kalchev\\AppData\\Roaming\\NuGet\\NuGet.Config"
