@@ -3,14 +3,17 @@ import Header from "./components/Header";
 import { Link, useNavigate } from "react-router";
 import Dashboard from "./components/Dashboard";
 import { SessionContext } from "./contexts/SessionStorage";
+import { authService } from "./services/authService";
 
 function App() {
-  const { session } = useContext(SessionContext);
+  const { session, setSession } = useContext(SessionContext);
 
   const router = useNavigate();
 
   const handleLogOut = async () => {
-    localStorage.removeItem("cachedApps");
+    authService.logout();
+    setSession(null);
+    router("/");
   };
 
   return (

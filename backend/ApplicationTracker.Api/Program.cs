@@ -3,6 +3,8 @@ using System.Text;
 using ApplicationTracker.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,9 +21,9 @@ builder.Services.AddCors(options =>
     });
 });
 builder.Services.AddAuthentication("Bearer")
-.AddJwtBearer(Options =>
+.AddJwtBearer(options =>
 {
-    Options.TokenValidationParameters = new TokenValidationParameters
+    options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
         ValidateAudience = true,
@@ -29,7 +31,7 @@ builder.Services.AddAuthentication("Bearer")
         ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSexurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
 
@@ -37,7 +39,7 @@ builder.Services.AddAuthentication("Bearer")
 
 // Add database context
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationTracker.Api.Data.AppContext>(options =>
+builder.Services.AddDbContext<ApplicationTracker.Api.Data.ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 
@@ -50,7 +52,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 app.UseCors("AllowReact");
 app.MapControllers();
 app.UseAuthentication();

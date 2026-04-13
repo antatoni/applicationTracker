@@ -4,10 +4,11 @@ import Applications from "./Applications";
 import Header from "./Header";
 import { Link, useNavigate } from "react-router";
 import { SessionContext } from "../contexts/SessionStorage";
+import { authService } from "../services/authService";
 
 function Dashboard() {
   const [isOpen, setIsOpen] = useState(false);
-  const { session } = useContext(SessionContext);
+  const { session, setSession } = useContext(SessionContext);
   const openPopUp = () => setIsOpen(true);
   const closePopUp = () => setIsOpen(false);
   const [applications, setApplications] = useState([]);
@@ -18,10 +19,11 @@ function Dashboard() {
     if (!session) {
       router("/login");
     }
-  }, [session, router]);
+  }, []);
 
   const handleLogOut = async () => {
-    localStorage.removeItem("cachedApps");
+    authService.logout();
+    setSession(null);
     router("/");
   };
 

@@ -30,6 +30,21 @@ namespace ApplicationTracker.Api.Migrations
                     table.PrimaryKey("PK_Applications", x => x.Id);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    PasswordHash = table.Column<string>(type: "text", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Applications_UserUid",
                 table: "Applications",
@@ -41,6 +56,9 @@ namespace ApplicationTracker.Api.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Applications");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

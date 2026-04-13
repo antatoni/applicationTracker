@@ -17,10 +17,10 @@ namespace ApplicationTracker.Api.Controllers
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly Data.AppContext _context;
+        private readonly Data.ApplicationDbContext _context;
         private readonly IConfiguration _config;
 
-        public AuthController(Data.AppContext context, IConfiguration config)
+        public AuthController(Data.ApplicationDbContext context, IConfiguration config)
         {
             _context = context;
             _config = config;

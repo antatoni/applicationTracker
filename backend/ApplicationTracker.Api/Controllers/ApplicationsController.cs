@@ -7,9 +7,9 @@ namespace ApplicationTracker.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ApplicationsController(Data.AppContext context) : ControllerBase
+public class ApplicationsController(Data.ApplicationDbContext context) : ControllerBase
 {
-    private readonly Data.AppContext _context = context;
+    private readonly Data.ApplicationDbContext _context = context;
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Application>>> GetApplications([FromQuery] string userId)

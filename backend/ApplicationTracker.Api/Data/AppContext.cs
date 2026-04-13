@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationTracker.Api.Data;
 
-public class AppContext(DbContextOptions<AppContext> options) : DbContext(options)
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
     public DbSet<Application> Applications { get; set; }
 

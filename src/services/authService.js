@@ -1,0 +1,49 @@
+const API_Url = "http://localhost:5000/api/auth";
+
+export const authService = {
+  async register(email, password) {
+    const response = await fetch(`${API_Url}/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json:" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Registration failed");
+    }
+
+    const data = await response.json();
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("userId", data.userId);
+    return data;
+  },
+
+  async login(email, password) {
+    const response = await fetch(`${API_Url}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Login failed");
+    }
+
+    const data = await response.json();
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("userId", data.userId);
+    return data;
+  },
+
+  logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("cachedApps");
+  },
+
+  getToken() {
+    return localStorage.getItem("token");
+  },
+};

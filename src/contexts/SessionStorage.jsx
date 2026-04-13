@@ -1,27 +1,23 @@
-// import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
+import { authService } from "../services/authService";
 
-// export const SessionContext = createContext();
+export const SessionContext = createContext();
 
-// export const SessionProvider = ({ children }) => {
-//   const [session, setSession] = useState(null);
+export const SessionProvider = ({ children }) => {
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-//   useEffect(() => {
-//     supabase.auth.getSession().then(({ data: { session } }) => {
-//       setSession(session);
-//     });
+  useEffect(() => {
+    const token = authService.getToken();
+    if (token) {
+      setSession({ token, userId: localStorage.getItem("userId") });
+    }
+    setLoading(false);
+  }, []);
 
-//     const {
-//       data: { subscription },
-//     } = supabase.auth.onAuthStateChange((event, session) => {
-//       setSession(session);
-//     });
-
-//     return () => subscription.unsubscribe();
-//   }, []);
-
-//   return (
-//     <SessionContext.Provider value={{ session, setSession }}>
-//       {children}
-//     </SessionContext.Provider>
-//   );
-// };
+  return (
+    <SessionContext.Provider value={{ session, setSession, loading }}>
+      {children}
+    </SessionContext.Provider>
+  );
+};
