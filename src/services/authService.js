@@ -1,10 +1,12 @@
 const API_Url = import.meta.env.VITE_BASE_URL;
 
+console.log("API_Url at runtime:", API_Url);
+
 export const authService = {
   async register(email, password) {
     const response = await fetch(`${API_Url}/auth/register`, {
       method: "POST",
-      headers: { "Content-Type": "application/json:" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
 
