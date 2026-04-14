@@ -4,7 +4,7 @@ console.log("API_Url at runtime:", API_Url);
 
 export const authService = {
   async register(email, password) {
-    const response = await fetch(`${API_Url}/auth/register`, {
+    const response = await fetch(`${API_Url}/api/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -22,7 +22,7 @@ export const authService = {
   },
 
   async login(email, password) {
-    const response = await fetch(`${API_Url}/auth/login`, {
+    const response = await fetch(`${API_Url}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
