@@ -58,5 +58,13 @@ app.UseCors("AllowReact");
 app.UseAuthentication();
 app.UseAuthorization();
 
+
 app.MapControllers();
-app.Run($"http://0.0.0.0:8080");
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(connectionString, npgsql =>
+    {
+        npgsql.CommandTimeout(10);
+        npgsql.EnableRetryOnFailure();
+    }));
+app.Run($"http://0.0.0.0:{port}");
