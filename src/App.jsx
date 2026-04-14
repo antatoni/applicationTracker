@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Header from "./components/Header";
 import { Link, useNavigate } from "react-router";
 import Dashboard from "./components/Dashboard";
@@ -15,6 +15,11 @@ function App() {
     setSession(null);
     router("/");
   };
+  useEffect(() => {
+    console.log("ALL ENV:", import.meta.env);
+    console.log("BASE URL:", import.meta.env.VITE_BASE_URL);
+    console.log("API_Url at runtime:", API_Url);
+  }, []);
 
   return (
     <>
