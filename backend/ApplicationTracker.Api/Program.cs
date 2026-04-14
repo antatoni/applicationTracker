@@ -54,8 +54,9 @@ if (app.Environment.IsDevelopment())
 
 // app.UseHttpsRedirection();
 app.UseCors("AllowReact");
-app.MapControllers();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.Run();
+app.MapControllers();
+app.Run($"http://0.0.0.0:8080");
