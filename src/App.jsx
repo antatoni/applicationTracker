@@ -15,6 +15,8 @@ function App() {
     setSession(null);
     router("/");
   };
+  const API_Url = import.meta.env.VITE_BASE_URL;
+
   useEffect(() => {
     console.log("ALL ENV:", import.meta.env);
     console.log("BASE URL:", import.meta.env.VITE_BASE_URL);
