@@ -40,12 +40,10 @@ builder.Services.AddAuthentication("Bearer")
 // Add database context
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString, npgsql =>
+    options.UseNpgsql(connectionString, npgsqlOptions =>
     {
-        npgsql.CommandTimeout(5);
-        npgsql.EnableRetryOnFailure(2);
+        npgsqlOptions.CommandTimeout(30);
     }));
-
 
 var app = builder.Build();
 
