@@ -42,11 +42,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString, npgsql =>
     {
-        npgsql.CommandTimeout(10);
-        npgsql.EnableRetryOnFailure(
-            maxRetryCount: 3,
-            maxRetryDelay: TimeSpan.FromSeconds(5),
-            errorCodesToAdd: null);
+        npgsql.CommandTimeout(5);
+        npgsql.EnableRetryOnFailure(2);
     }));
 
 

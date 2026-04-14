@@ -13,6 +13,19 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.Email)
+            .IsRequired()
+            .HasMaxLength(255);
+
+            entity.HasIndex(e => e.Email)
+            .IsUnique();
+
+        });
+
         modelBuilder.Entity<Application>(entity =>
         {
             entity.HasKey(e => e.Id);
