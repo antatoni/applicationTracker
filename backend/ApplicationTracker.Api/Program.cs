@@ -39,9 +39,15 @@ builder.Services.AddAuthentication("Bearer")
 
 // Add database context
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationTracker.Api.Data.ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString));
-
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(connectionString, npgsql =>
+    {
+        npgsql.CommandTimeout(10);
+        npgsql.EnableRetryOnFailure(
+            maxRetryCount: 3,
+            maxRetryDelay: TimeSpan.FromSeconds(5),
+            errorCodesToAdd: null);
+    }));
 
 
 var app = builder.Build();
@@ -61,10 +67,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString, npgsql =>
-    {
-        npgsql.CommandTimeout(10);
-        npgsql.EnableRetryOnFailure();
-    }));
+
 app.Run($"http://0.0.0.0:{port}");
