@@ -58,7 +58,7 @@ const Application = ({ application, handleDelete, handleUpdate }) => {
 
       {/* Applied On Column */}
       <div className="content-center text-center font-bold italic">
-        {localApplication.appliedOn}
+        {new Date(localApplication.appliedOn).toLocaleDateString()}
       </div>
 
       {/* Stage Column */}

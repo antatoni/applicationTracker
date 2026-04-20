@@ -35,9 +35,9 @@ const Applications = ({ userInfo, applications, setApplications }) => {
     .sort((a, b) => {
       switch (sortBy) {
         case "newest":
-          return new Date(b.applied_on) - new Date(a.applied_on);
+          return new Date(b.appliedOn) - new Date(a.appliedOn);
         case "oldest":
-          return new Date(a.applied_on) - new Date(b.applied_on);
+          return new Date(a.appliedOn) - new Date(b.appliedOn);
         case "a-b":
           return a.company.localeCompare(b.company);
         case "b-a":
@@ -55,7 +55,7 @@ const Applications = ({ userInfo, applications, setApplications }) => {
           company: updatedApp.company,
           stage: updatedApp.stage,
           url: updatedApp.url,
-          UserUid: UserUid,
+          userUid: UserUid,
         },
       );
 

@@ -41,11 +41,15 @@ export const applicationsService = {
     return response.json();
   },
 
-  async deleteApplication(id) {
-    const response = await fetch(`${API_Url}/api/applications/${id}`, {
-      method: "DELETE",
-      headers: getAuthHeader(),
-    });
+  async deleteApplication(id, userUid) {
+    const params = new URLSearchParams({ UserUid: userUid });
+    const response = await fetch(
+      `${API_Url}/api/applications/${id}?${params}`,
+      {
+        method: "DELETE",
+        headers: getAuthHeader(),
+      },
+    );
 
     if (!response.ok) throw new Error("Failed to delete application!");
     return response.status === 204 ? null : response.json();

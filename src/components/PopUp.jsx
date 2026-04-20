@@ -8,7 +8,7 @@ const PopUp = ({ open, close, userInfo, applications, setApplications }) => {
   const [url, setUrl] = useState("");
   const [appliedOn, setAppliedOn] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const UserUid = userInfo?.id || userInfo?.UserUid;
+  const UserUid = userInfo?.userUid;
   if (!open) return null;
 
   const handleStageChange = (e) => {
@@ -42,7 +42,7 @@ const PopUp = ({ open, close, userInfo, applications, setApplications }) => {
         url: url || "Not given",
         appliedOn,
         stage,
-        UserUid: UserUid,
+        userUid: UserUid,
       });
 
       setApplications((prev) => [newApplication, ...prev]);
