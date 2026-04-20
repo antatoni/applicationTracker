@@ -18,7 +18,7 @@ public class ApplicationsController(Data.ApplicationDbContext context) : Control
             return BadRequest("UserId is required");
 
         var applications = await _context.Applications
-            .Where(a => a.UserUid == userId)
+            .Where(a => a.userId == userId)
             .OrderByDescending(a => a.CreatedAt)
             .ToListAsync();
 
@@ -32,7 +32,7 @@ public class ApplicationsController(Data.ApplicationDbContext context) : Control
             return BadRequest("UserId is required");
 
         var application = await _context.Applications
-            .FirstOrDefaultAsync(a => a.Id == id && a.UserUid == userId);
+            .FirstOrDefaultAsync(a => a.Id == id && a.userId == userId);
 
         if (application == null)
             return NotFound();
@@ -50,16 +50,16 @@ public class ApplicationsController(Data.ApplicationDbContext context) : Control
         {
             Company = request.Company,
             Url = request.Url ?? "Not Given",
-            AppliedOn = request.AppliedOn,
+            AppliedOn = DateTime.SpecifyKind(request.AppliedOn, DateTimeKind.Utc),
             Stage = request.Stage,
-            UserUid = request.UserUid,
+            userId = request.userId,
             CreatedAt = DateTime.UtcNow
         };
 
         _context.Applications.Add(application);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetApplication), new { id = application.Id, userId = application.UserUid }, application);
+        return CreatedAtAction(nameof(GetApplication), new { id = application.Id, userId = application.userId }, application);
     }
 
     [HttpPut("{id}")]
@@ -69,7 +69,7 @@ public class ApplicationsController(Data.ApplicationDbContext context) : Control
             return BadRequest("UserId is required");
 
         var application = await _context.Applications
-            .FirstOrDefaultAsync(a => a.Id == id && a.UserUid == request.UserId);
+            .FirstOrDefaultAsync(a => a.Id == id && a.userId == request.UserId);
 
         if (application == null)
             return NotFound();
@@ -96,7 +96,7 @@ public class ApplicationsController(Data.ApplicationDbContext context) : Control
             return BadRequest("UserId is required");
 
         var application = await _context.Applications
-            .FirstOrDefaultAsync(a => a.Id == id && a.UserUid == userId);
+            .FirstOrDefaultAsync(a => a.Id == id && a.userId == userId);
 
         if (application == null)
             return NotFound();
@@ -114,7 +114,7 @@ public class CreateApplicationRequest
     public string? Url { get; set; }
     public required DateTime AppliedOn { get; set; }
     public required string Stage { get; set; }
-    public required string UserUid { get; set; }
+    public required string userId { get; set; }
 }
 
 public class UpdateApplicationRequest

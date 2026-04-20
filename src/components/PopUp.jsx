@@ -42,7 +42,7 @@ const PopUp = ({ open, close, userInfo, applications, setApplications }) => {
         url: url || "Not given",
         appliedOn,
         stage,
-        userUid: userId,
+        userId: userId,
       });
 
       setApplications((prev) => [newApplication, ...prev]);

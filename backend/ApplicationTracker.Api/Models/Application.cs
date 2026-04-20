@@ -12,7 +12,7 @@ public class Application
 
     public required string Stage { get; set; }
 
-    public required string UserUid { get; set; }
+    public required string userId { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
