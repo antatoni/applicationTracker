@@ -28,6 +28,8 @@ export const applicationsService = {
       console.log(error);
       throw new Error("Failed to create application!");
     }
+
+    return response.json();
   },
 
   async updateApplication(id, update) {

@@ -8,7 +8,7 @@ public class Application
 
     public string Url { get; set; } = "Not Given";
 
-    public DateOnly AppliedOn { get; set; }
+    public DateTime AppliedOn { get; set; }
 
     public required string Stage { get; set; }
 
