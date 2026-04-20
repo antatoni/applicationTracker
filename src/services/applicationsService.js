@@ -23,8 +23,11 @@ export const applicationsService = {
       headers: getAuthHeader(),
       body: JSON.stringify(app),
     });
-    if (!response.ok) throw new Error("Failed to create application!");
-    return response.json();
+    if (!response.ok) {
+      const error = await response.json();
+      console.log(error);
+      throw new Error("Failed to create application!");
+    }
   },
 
   async updateApplication(id, update) {
