@@ -6,13 +6,11 @@ const getAuthHeader = () => ({
 });
 
 export const applicationsService = {
-  async getApplications(UserUid) {
-    const response = await fetch(
-      `${API_Url}/api/applications?UserUid=${UserUid}`,
-      {
-        headers: getAuthHeader(),
-      },
-    );
+  async getApplications() {
+    const response = await fetch(`${API_Url}/api/applications`, {
+      headers: getAuthHeader(),
+    });
+
     if (!response.ok) throw new Error("Failed to fetch applications!");
     return response.json();
   },
@@ -42,14 +40,12 @@ export const applicationsService = {
     return response.json();
   },
 
-  async deleteApplication(id, UserUid) {
-    const response = await fetch(
-      `${API_Url}/api/applications/${id}?UserUid=${UserUid}`,
-      {
-        method: "DELETE",
-        headers: getAuthHeader(),
-      },
-    );
+  async deleteApplication(id) {
+    const response = await fetch(`${API_Url}/api/applications/${id}`, {
+      method: "DELETE",
+      headers: getAuthHeader(),
+    });
+
     if (!response.ok) throw new Error("Failed to delete application!");
     return response.status === 204 ? null : response.json();
   },
