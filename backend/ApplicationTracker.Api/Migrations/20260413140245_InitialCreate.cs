@@ -20,7 +20,7 @@ namespace ApplicationTracker.Api.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Company = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     Url = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    AppliedOn = table.Column<DateOnly>(type: "date", nullable: false),
+                    AppliedOn = table.Column<DateTime>(type: "date", nullable: false),
                     Stage = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     UserUid = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()")

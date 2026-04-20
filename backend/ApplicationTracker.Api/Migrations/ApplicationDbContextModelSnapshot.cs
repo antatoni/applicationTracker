@@ -30,7 +30,7 @@ namespace ApplicationTracker.Api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("AppliedOn")
+                    b.Property<DateTime>("AppliedOn")
                         .HasColumnType("date");
 
                     b.Property<string>("Company")
