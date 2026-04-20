@@ -46,4 +46,8 @@ export const authService = {
   getToken() {
     return localStorage.getItem("token");
   },
+
+  getUserUid() {
+    return localStorage.getItem("UserUid");
+  },
 };

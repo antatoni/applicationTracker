@@ -6,7 +6,7 @@ import { applicationsService } from "../services/applicationsService.js";
 const Applications = ({ userInfo, applications, setApplications }) => {
   const [sortBy, setSortBy] = useState("");
   const [filterBy, setFilterBy] = useState("");
-  const UserUid = userInfo?.id || userInfo?.UserUid;
+  const UserUid = userInfo?.userUid;
 
   useEffect(() => {
     const loaderData = async () => {

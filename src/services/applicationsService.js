@@ -6,8 +6,9 @@ const getAuthHeader = () => ({
 });
 
 export const applicationsService = {
-  async getApplications() {
-    const response = await fetch(`${API_Url}/api/applications`, {
+  async getApplications(userUid) {
+    const params = new URLSearchParams({ UserUid: userUid });
+    const response = await fetch(`${API_Url}/api/applications?${params}`, {
       headers: getAuthHeader(),
     });
 

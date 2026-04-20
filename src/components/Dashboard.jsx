@@ -18,7 +18,7 @@ function Dashboard() {
 
   useEffect(() => {
     const loadApplications = async () => {
-      const userUid = session?.id; // or session?.userUid
+      const userUid = session?.userUid;
 
       if (!userUid) return;
 
