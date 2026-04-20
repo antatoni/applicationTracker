@@ -15,7 +15,7 @@ export const authService = {
 
     const data = await response.json();
     localStorage.setItem("token", data.token);
-    localStorage.setItem("UserUid", data.UserUid);
+    localStorage.setItem("userUid", data.userUid);
     return data;
   },
 
@@ -33,13 +33,13 @@ export const authService = {
 
     const data = await response.json();
     localStorage.setItem("token", data.token);
-    localStorage.setItem("UserUid", data.UserUid);
+    localStorage.setItem("userUid", data.userUid);
     return data;
   },
 
   logout() {
     localStorage.removeItem("token");
-    localStorage.removeItem("UserUid");
+    localStorage.removeItem("userUid");
     localStorage.removeItem("cachedApps");
   },
 
@@ -48,6 +48,6 @@ export const authService = {
   },
 
   getUserUid() {
-    return localStorage.getItem("UserUid");
+    return localStorage.getItem("userUid");
   },
 };
