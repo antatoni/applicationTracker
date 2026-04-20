@@ -12,13 +12,13 @@ public class ApplicationsController(Data.ApplicationDbContext context) : Control
     private readonly Data.ApplicationDbContext _context = context;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Application>>> GetApplications([FromQuery] string userId)
+    public async Task<ActionResult<IEnumerable<Application>>> GetApplications([FromQuery] string UserUid)
     {
-        if (string.IsNullOrEmpty(userId))
-            return BadRequest("UserId is required");
+        if (string.IsNullOrEmpty(UserUid))
+            return BadRequest("UserUid is required");
 
         var applications = await _context.Applications
-            .Where(a => a.userId == userId)
+            .Where(a => a.UserUid == UserUid)
             .OrderByDescending(a => a.CreatedAt)
             .ToListAsync();
 
@@ -26,13 +26,13 @@ public class ApplicationsController(Data.ApplicationDbContext context) : Control
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Application>> GetApplication(int id, [FromQuery] string userId)
+    public async Task<ActionResult<Application>> GetApplication(int id, [FromQuery] string UserUid)
     {
-        if (string.IsNullOrEmpty(userId))
-            return BadRequest("UserId is required");
+        if (string.IsNullOrEmpty(UserUid))
+            return BadRequest("UserUid is required");
 
         var application = await _context.Applications
-            .FirstOrDefaultAsync(a => a.Id == id && a.userId == userId);
+            .FirstOrDefaultAsync(a => a.Id == id && a.UserUid == UserUid);
 
         if (application == null)
             return NotFound();
@@ -52,24 +52,24 @@ public class ApplicationsController(Data.ApplicationDbContext context) : Control
             Url = request.Url ?? "Not Given",
             AppliedOn = DateTime.SpecifyKind(request.AppliedOn, DateTimeKind.Utc),
             Stage = request.Stage,
-            userId = request.userId,
+            UserUid = request.UserUid,
             CreatedAt = DateTime.UtcNow
         };
 
         _context.Applications.Add(application);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetApplication), new { id = application.Id, userId = application.userId }, application);
+        return CreatedAtAction(nameof(GetApplication), new { id = application.Id, UserUid = application.UserUid }, application);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateApplication(int id, [FromBody] UpdateApplicationRequest request)
     {
-        if (string.IsNullOrEmpty(request.UserId))
-            return BadRequest("UserId is required");
+        if (string.IsNullOrEmpty(request.UserUid))
+            return BadRequest("UserUid is required");
 
         var application = await _context.Applications
-            .FirstOrDefaultAsync(a => a.Id == id && a.userId == request.UserId);
+            .FirstOrDefaultAsync(a => a.Id == id && a.UserUid == request.UserUid);
 
         if (application == null)
             return NotFound();
@@ -90,13 +90,13 @@ public class ApplicationsController(Data.ApplicationDbContext context) : Control
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteApplication(int id, [FromQuery] string userId)
+    public async Task<IActionResult> DeleteApplication(int id, [FromQuery] string UserUid)
     {
-        if (string.IsNullOrEmpty(userId))
-            return BadRequest("UserId is required");
+        if (string.IsNullOrEmpty(UserUid))
+            return BadRequest("UserUid is required");
 
         var application = await _context.Applications
-            .FirstOrDefaultAsync(a => a.Id == id && a.userId == userId);
+            .FirstOrDefaultAsync(a => a.Id == id && a.UserUid == UserUid);
 
         if (application == null)
             return NotFound();
@@ -114,7 +114,7 @@ public class CreateApplicationRequest
     public string? Url { get; set; }
     public required DateTime AppliedOn { get; set; }
     public required string Stage { get; set; }
-    public required string userId { get; set; }
+    public required string UserUid { get; set; }
 }
 
 public class UpdateApplicationRequest
@@ -122,5 +122,5 @@ public class UpdateApplicationRequest
     public string? Company { get; set; }
     public string? Url { get; set; }
     public string? Stage { get; set; }
-    public required string UserId { get; set; }
+    public required string UserUid { get; set; }
 }

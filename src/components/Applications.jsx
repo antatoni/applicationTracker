@@ -6,7 +6,7 @@ import { applicationsService } from "../services/applicationsService.js";
 const Applications = ({ userInfo, applications, setApplications }) => {
   const [sortBy, setSortBy] = useState("");
   const [filterBy, setFilterBy] = useState("");
-  const userId = userInfo?.id || userInfo?.userId;
+  const UserUid = userInfo?.id || userInfo?.UserUid;
 
   useEffect(() => {
     const loaderData = async () => {
@@ -55,7 +55,7 @@ const Applications = ({ userInfo, applications, setApplications }) => {
           company: updatedApp.company,
           stage: updatedApp.stage,
           url: updatedApp.url,
-          userId: userId,
+          UserUid: UserUid,
         },
       );
 
@@ -74,7 +74,7 @@ const Applications = ({ userInfo, applications, setApplications }) => {
 
   const handleDelete = async (id) => {
     try {
-      await applicationsService.deleteApplication(id, userId);
+      await applicationsService.deleteApplication(id, UserUid);
       setApplications((prev) => prev.filter((app) => app.id !== id));
       const cached = JSON.parse(localStorage.getItem("cachedApps") || "[]");
       const updatedCache = cached.filter((app) => app.id !== id);

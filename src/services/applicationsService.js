@@ -6,9 +6,9 @@ const getAuthHeader = () => ({
 });
 
 export const applicationsService = {
-  async getApplications(userId) {
+  async getApplications(UserUid) {
     const response = await fetch(
-      `${API_Url}/api/applications?userId=${userId}`,
+      `${API_Url}/api/applications?UserUid=${UserUid}`,
       {
         headers: getAuthHeader(),
       },
@@ -42,9 +42,9 @@ export const applicationsService = {
     return response.json();
   },
 
-  async deleteApplication(id, userId) {
+  async deleteApplication(id, UserUid) {
     const response = await fetch(
-      `${API_Url}/api/applications/${id}?userId=${userId}`,
+      `${API_Url}/api/applications/${id}?UserUid=${UserUid}`,
       {
         method: "DELETE",
         headers: getAuthHeader(),

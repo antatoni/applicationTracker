@@ -19,7 +19,7 @@ function Dashboard() {
   useEffect(() => {
     const loadApplications = async () => {
       try {
-        const data = await applicationsService.getApplications(session.userId);
+        const data = await applicationsService.getApplications(session.UserUid);
         setApplications(data);
         localStorage.setItem("cachedApps", JSON.stringify(data));
       } catch (error) {

@@ -23,7 +23,7 @@ const Login = () => {
 
     try {
       const data = await authService.login(email, password);
-      setSession({ token: data.token, userId: data.userId });
+      setSession({ token: data.token, UserUid: data.UserUid });
       router("/dashboard");
     } catch (error) {
       setError(error.message);

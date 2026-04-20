@@ -41,7 +41,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
                 .IsRequired()
                 .HasMaxLength(50);
 
-            entity.Property(e => e.userId)
+            entity.Property(e => e.UserUid)
                 .IsRequired()
                 .HasMaxLength(255);
 
@@ -49,7 +49,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
                 .HasDefaultValueSql("now()");
 
             // Index for faster queries by user
-            entity.HasIndex(e => e.userId);
+            entity.HasIndex(e => e.UserUid);
         });
     }
 }

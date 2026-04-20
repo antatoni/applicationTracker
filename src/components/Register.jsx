@@ -35,7 +35,7 @@ const Register = () => {
     setLoading(true);
     try {
       const data = await authService.register(email, password);
-      setSession({ token: data.token, userId: data.userId });
+      setSession({ token: data.token, UserUid: data.UserUid });
       router("/dashboard");
     } catch (error) {
       setError(error.message);
