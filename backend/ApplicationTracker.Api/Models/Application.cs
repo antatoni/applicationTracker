@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace ApplicationTracker.Api.Models;
 
 public class Application
@@ -12,6 +14,7 @@ public class Application
 
     public required string Stage { get; set; }
 
+    [Column("userId")]
     public required string UserUid { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
