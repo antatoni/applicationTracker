@@ -112,7 +112,7 @@ public class CreateApplicationRequest
 {
     public required string Company { get; set; }
     public string? Url { get; set; }
-    public required DateOnly AppliedOn { get; set; }
+    public required DateTime AppliedOn { get; set; }
     public required string Stage { get; set; }
     public required string UserUid { get; set; }
 }
