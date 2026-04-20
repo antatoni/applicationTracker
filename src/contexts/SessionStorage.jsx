@@ -10,7 +10,12 @@ export const SessionProvider = ({ children }) => {
   useEffect(() => {
     const token = authService.getToken();
     if (token) {
-      setSession({ token, UserUid: localStorage.getItem("UserUid") });
+      const userUid = authService.getUserUid();
+
+      setSession({
+        token,
+        userUid,
+      });
     }
     setLoading(false);
   }, []);

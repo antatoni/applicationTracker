@@ -18,8 +18,12 @@ function Dashboard() {
 
   useEffect(() => {
     const loadApplications = async () => {
+      const userUid = session?.id; // or session?.userUid
+
+      if (!userUid) return;
+
       try {
-        const data = await applicationsService.getApplications(session.UserUid);
+        const data = await applicationsService.getApplications(userUid);
         setApplications(data);
         localStorage.setItem("cachedApps", JSON.stringify(data));
       } catch (error) {
