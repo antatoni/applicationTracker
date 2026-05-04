@@ -40,7 +40,7 @@ const PopUp = ({ open, close, userInfo, applications, setApplications }) => {
       const newApplication = await applicationsService.createApplication({
         company,
         url: url || "Not given",
-        appliedOn,
+        appliedOn: new Date(appliedOn).toISOString(),
         stage,
         userUid: UserUid,
       });
