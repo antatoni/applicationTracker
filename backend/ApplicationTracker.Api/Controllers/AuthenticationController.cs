@@ -42,7 +42,7 @@ namespace ApplicationTracker.Api.Controllers
             await _context.SaveChangesAsync();
 
             var token = GenerateJwtToken(user);
-            return Ok(new { token, userUid = user.Id, email = user.Email });
+            return Ok(new { token, userUid = user.Id.ToString(), email = user.Email });
         }
 
         [HttpPost("login")]
@@ -54,7 +54,7 @@ namespace ApplicationTracker.Api.Controllers
                 return Unauthorized(new { message = "Invalid credentials" });
 
             var token = GenerateJwtToken(user);
-            return Ok(new { token, userUid = user.Id, email = user.Email });
+            return Ok(new { token, userUid = user.Id.ToString(), email = user.Email });
         }
 
         private string HashPassword(string password)
