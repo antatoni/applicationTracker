@@ -48,7 +48,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("now()");
 
-            // Index for faster queries by user
             entity.HasIndex(e => e.UserUid);
         });
     }
