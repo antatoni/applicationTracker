@@ -17,7 +17,6 @@ export const applicationsService = {
   },
 
   async createApplication(app) {
-    console.log("Sending application data:", app);
     const response = await fetch(`${API_Url}/api/applications`, {
       method: "POST",
       headers: getAuthHeader(),
@@ -26,8 +25,6 @@ export const applicationsService = {
 
     if (!response.ok) {
       const error = await response.json();
-      console.log("Validation error:", error);
-      console.log("Sending application data:", app);
       throw new Error(
         `Failed to create application: ${JSON.stringify(error)}\n ${app}`,
       );

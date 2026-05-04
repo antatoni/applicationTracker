@@ -17,11 +17,7 @@ function App() {
   };
   const API_Url = import.meta.env.VITE_BASE_URL;
 
-  useEffect(() => {
-    console.log("ALL ENV:", import.meta.env);
-    console.log("BASE URL:", import.meta.env.VITE_BASE_URL);
-    console.log("API_Url at runtime:", API_Url);
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>
