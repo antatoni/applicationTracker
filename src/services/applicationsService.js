@@ -16,7 +16,13 @@ export const applicationsService = {
     return response.json();
   },
 
-  async createApplication(app) {\n    // Ensure appliedOn is a valid ISO 8601 datetime\n    const payload = {\n      ...app,\n      appliedOn: app.appliedOn ? new Date(app.appliedOn).toISOString() : new Date().toISOString(),\n    };\n    const response = await fetch(`${API_Url}/api/applications`, {\n      method: "POST",\n      headers: getAuthHeader(),\n      body: JSON.stringify(payload),\n    });
+  async createApplication(app) {
+    const response = await fetch(`${API_Url}/api/applications`, {
+      method: "POST",
+      headers: getAuthHeader(),
+      body: JSON.stringify(app),
+    });
+
     if (!response.ok) {
       const error = await response.json();
       console.log(error);
