@@ -27,7 +27,10 @@ export const applicationsService = {
     if (!response.ok) {
       const error = await response.json();
       console.log("Validation error:", error);
-      throw new Error(`Failed to create application: ${JSON.stringify(error)}`);
+      console.log("Sending application data:", app);
+      throw new Error(
+        `Failed to create application: ${JSON.stringify(error)}\n ${app}`,
+      );
     }
 
     return response.json();
