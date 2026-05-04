@@ -38,11 +38,11 @@ const PopUp = ({ open, close, userInfo, applications, setApplications }) => {
 
     try {
       const newApplication = await applicationsService.createApplication({
-        Company: company,
-        Url: url || "Not given",
-        AppliedOn: new Date(appliedOn).toISOString(),
-        Stage: stage,
-        UserUid: UserUid,
+        company,
+        url: url || "Not given",
+        appliedOn: new Date(appliedOn).toISOString(),
+        stage,
+        userUid: UserUid,
       });
 
       setApplications((prev) => [newApplication, ...prev]);
